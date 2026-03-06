@@ -1,120 +1,809 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="it">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Work in Progress</title>
-<style>
-    body {
-        display: flex;
-        flex-direction: column;
-        justify-content: center;
-        align-items: center;
-        height: 100vh;
-        margin: 0;
-        background: #ffffff;
-        color: #000000;
-        font-family: "Courier New", Courier, monospace;
-        text-align: center;
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>VanTrip — Avventure in Camper con Gruppo</title>
+  <meta name="description" content="VanTrip organizza esperienze in camper con piccoli gruppi: itinerario, community e supporto. Prenota su WhatsApp." />
+
+  <style>
+    :root{
+      --bg:#070A10;
+      --panel: rgba(255,255,255,.06);
+      --panel2: rgba(255,255,255,.04);
+      --stroke: rgba(255,255,255,.10);
+      --text: rgba(244,248,255,.96);
+      --muted: rgba(244,248,255,.70);
+      --brand: #78FFB6;
+      --brand2:#78C8FF;
+      --shadow: 0 18px 60px rgba(0,0,0,.45);
+      --radius: 18px;
+      --max: 1120px;
     }
-    img {
-        max-width: 300px;
-        margin-bottom: 20px;
+    *{box-sizing:border-box}
+    html,body{height:100%}
+    body{
+      margin:0;
+      font-family: ui-sans-serif, system-ui, -apple-system, Segoe UI, Roboto, Helvetica, Arial, "Apple Color Emoji","Segoe UI Emoji";
+      color:var(--text);
+      background:
+        radial-gradient(1100px 700px at 20% 10%, rgba(120,255,182,.18), transparent 58%),
+        radial-gradient(1000px 680px at 85% 0%, rgba(120,200,255,.18), transparent 55%),
+        radial-gradient(900px 600px at 70% 85%, rgba(120,255,182,.12), transparent 60%),
+        var(--bg);
+      line-height:1.55;
+      overflow-x:hidden;
     }
-    #story, #brand, #countdown {
-        font-size: 12px;        /* piccolo come prima */
-        font-weight: bold;       /* grassetto */
-        letter-spacing: 0.5px;
-        line-height: 1.3;
-        max-width: 300px;
-        white-space: pre-wrap;
-        min-height: 30px;
-        position: relative;
+    a{color:inherit; text-decoration:none}
+    .wrap{max-width:var(--max); margin:0 auto; padding:0 20px}
+    .glass{
+      background: linear-gradient(180deg, var(--panel), var(--panel2));
+      border:1px solid var(--stroke);
+      box-shadow: var(--shadow);
+      border-radius: var(--radius);
+      overflow:hidden;
     }
-    #story::after, #countdown::after {
-        content: '|';
-        animation: blink 1s infinite;
-        margin-left: 2px;
+    .btn{
+      display:inline-flex; align-items:center; justify-content:center; gap:10px;
+      padding:12px 16px;
+      border-radius: 999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.04);
+      font-weight:900;
+      font-size:14px;
+      cursor:pointer;
+      transition: transform .15s ease, background .2s ease, border-color .2s ease;
+      user-select:none;
+      white-space:nowrap;
     }
-    @keyframes blink {
-        0%,50%,100% { opacity: 1; }
-        25%,75% { opacity: 0; }
+    .btn:hover{transform: translateY(-1px); background: rgba(255,255,255,.06)}
+    .btn.primary{
+      border-color: rgba(120,255,182,.28);
+      background: linear-gradient(135deg, rgba(120,255,182,.18), rgba(120,200,255,.14));
     }
-    #brand {
-        opacity: 0; /* inizialmente trasparente */
-        margin-top: 10px;
-        transition: opacity 2s ease-in; /* effetto fade-in */
+    .btn.primary:hover{border-color: rgba(120,255,182,.45)}
+    .btn.ghost{background: rgba(255,255,255,.03)}
+    .btn.block{width:100%}
+
+    .tag{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 11px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background: rgba(255,255,255,.03);
+      font-weight:850;
+      font-size:12px;
+      color: rgba(244,248,255,.92);
     }
-    #countdown {
-        opacity: 0; /* inizialmente nascosto */
-        margin-top: 10px;
+    .kicker{
+      display:inline-flex; align-items:center; gap:10px;
+      padding:8px 12px;
+      border-radius:999px;
+      border:1px solid rgba(120,255,182,.22);
+      background: rgba(120,255,182,.10);
+      font-weight:900;
+      font-size:13px;
+      width:fit-content;
     }
-</style>
+    .dot{
+      width:8px; height:8px; border-radius:50%;
+      background: var(--brand);
+      box-shadow: 0 0 0 6px rgba(120,255,182,.12);
+    }
+
+    /* Topbar */
+    .topbar{
+      position:sticky; top:0; z-index:50;
+      backdrop-filter: blur(10px);
+      background: rgba(7,10,16,.70);
+      border-bottom: 1px solid rgba(255,255,255,.08);
+    }
+    .topbar .row{
+      display:flex; align-items:center; justify-content:space-between;
+      padding:14px 0; gap:12px;
+    }
+    .brand{
+      display:flex; align-items:center; gap:10px;
+      font-weight:950; letter-spacing:.2px;
+    }
+    .logo{
+      width:36px; height:36px; border-radius:12px;
+      background: linear-gradient(135deg, rgba(120,255,182,.95), rgba(120,200,255,.95));
+      position:relative;
+      box-shadow: 0 16px 40px rgba(120,255,182,.10);
+    }
+    .logo:after{
+      content:"";
+      position:absolute; inset:9px;
+      border-radius:10px;
+      border:2px solid rgba(7,10,16,.55);
+    }
+    .nav{
+      display:flex; gap:16px;
+      color: var(--muted);
+      font-weight:800;
+      font-size:14px;
+    }
+    .nav a:hover{color:var(--text)}
+    @media (max-width: 920px){ .nav{display:none} }
+
+    /* Hero */
+    .hero{padding:58px 0 18px}
+    .heroGrid{
+      display:grid;
+      grid-template-columns: 1.15fr .85fr;
+      gap:18px;
+      align-items:stretch;
+    }
+    @media (max-width: 980px){ .heroGrid{grid-template-columns:1fr} }
+
+    h1{
+      font-size: clamp(34px, 4.4vw, 58px);
+      line-height:1.03;
+      margin:14px 0 14px;
+      letter-spacing:-.7px;
+    }
+    .lead{
+      margin:0 0 18px;
+      color: rgba(244,248,255,.82);
+      font-size: clamp(16px, 1.8vw, 18px);
+      max-width: 60ch;
+      font-weight:650;
+    }
+    .heroActions{display:flex; gap:12px; flex-wrap:wrap; margin: 8px 0 10px}
+    .trustRow{display:flex; gap:10px; flex-wrap:wrap; margin-top:10px}
+    .trustRow .tag{font-weight:800; color: rgba(244,248,255,.88)}
+
+    .heroVisual{position:relative; min-height: 360px;}
+    .heroVisual .photo{
+      height: 210px;
+      background:
+        linear-gradient(180deg, rgba(7,10,16,.10), rgba(7,10,16,.88)),
+        radial-gradient(900px 260px at 20% 20%, rgba(120,255,182,.34), transparent 60%),
+        radial-gradient(900px 260px at 90% 20%, rgba(120,200,255,.28), transparent 60%),
+        url('https://images.unsplash.com/photo-1500530855697-b586d89ba3ee?auto=format&fit=crop&w=1600&q=80');
+      background-size: cover;
+      background-position: center;
+      border-bottom:1px solid rgba(255,255,255,.10);
+    }
+    .heroVisual .body{padding:16px 16px 18px}
+    .heroVisual h3{margin:0 0 6px; font-size:18px}
+    .heroVisual p{margin:0; color:var(--muted); font-weight:650}
+    .miniGrid{
+      margin-top:12px;
+      display:grid;
+      grid-template-columns: 1fr 1fr;
+      gap:10px;
+    }
+    .chip{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      border-radius:14px;
+      padding:10px;
+      font-size:13px;
+      font-weight:850;
+      color: rgba(244,248,255,.88);
+    }
+    .chip em{font-style:normal; color:var(--muted); font-weight:650}
+
+    /* Sections */
+    section{padding:40px 0}
+    .head{
+      display:flex; align-items:flex-end; justify-content:space-between; gap:16px;
+      margin-bottom:14px;
+    }
+    .head h2{
+      margin:0;
+      font-size: 28px;
+      letter-spacing:-.3px;
+    }
+    .head p{
+      margin:0;
+      color:var(--muted);
+      font-weight:650;
+      max-width: 68ch;
+    }
+
+    .grid3{display:grid; grid-template-columns: repeat(3, 1fr); gap:12px}
+    @media (max-width: 980px){ .grid3{grid-template-columns:1fr} }
+    .card{padding:18px}
+    .icon{
+      width:46px; height:46px; border-radius:16px;
+      display:flex; align-items:center; justify-content:center;
+      background: linear-gradient(135deg, rgba(120,255,182,.15), rgba(120,200,255,.12));
+      border:1px solid rgba(120,255,182,.16);
+      margin-bottom:12px;
+      font-size:20px;
+    }
+    .card h3{margin:0 0 6px; font-size:18px}
+    .card p{margin:0; color:var(--muted); font-weight:650}
+
+    /* Trips */
+    .tripsGrid{display:grid; grid-template-columns: repeat(3, 1fr); gap:12px}
+    @media (max-width: 980px){ .tripsGrid{grid-template-columns:1fr} }
+
+    .trip{padding:0}
+    .trip .photo{
+      height:160px;
+      background-size:cover;
+      background-position:center;
+      border-bottom:1px solid rgba(255,255,255,.10);
+      position:relative;
+    }
+    .trip .photo:after{
+      content:"";
+      position:absolute; inset:0;
+      background: linear-gradient(180deg, rgba(7,10,16,.10), rgba(7,10,16,.92));
+    }
+    .trip .content{padding:16px 16px 18px; position:relative}
+    .titleRow{
+      display:flex; align-items:flex-start; justify-content:space-between; gap:10px;
+      margin-bottom:10px;
+    }
+    .tripTitle{font-weight:950; font-size:16px; margin:0}
+    .pillSmall{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:6px 10px;
+      border-radius:999px;
+      background: rgba(255,255,255,.03);
+      border:1px solid rgba(255,255,255,.10);
+      color: rgba(244,248,255,.86);
+      font-weight:900;
+      font-size:12px;
+      white-space:nowrap;
+    }
+    .meta{display:flex; flex-wrap:wrap; gap:8px; margin: 8px 0 12px}
+    .meta span{
+      display:inline-flex; align-items:center; gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      color: rgba(244,248,255,.84);
+      font-weight:850;
+      font-size:12.5px;
+    }
+
+    /* Split + CTA panel */
+    .split{display:grid; grid-template-columns:1fr 1fr; gap:12px}
+    @media (max-width: 980px){ .split{grid-template-columns:1fr} }
+    .ctaPanel{
+      background: linear-gradient(135deg, rgba(120,255,182,.12), rgba(120,200,255,.10));
+      border-color: rgba(120,255,182,.18);
+    }
+
+    /* FAQ */
+    details{
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(255,255,255,.03);
+      border-radius:16px;
+      padding:12px 14px;
+    }
+    details + details{margin-top:10px}
+    summary{
+      cursor:pointer;
+      font-weight:950;
+      color: rgba(244,248,255,.92);
+      list-style:none;
+    }
+    summary::-webkit-details-marker{display:none}
+    details p{margin:10px 0 0; color:var(--muted); font-weight:650}
+
+    /* Form */
+    form{display:grid; gap:10px}
+    label{font-weight:900; font-size:13px; color: rgba(244,248,255,.92)}
+    input, select, textarea{
+      width:100%;
+      padding:12px 12px;
+      border-radius:14px;
+      border:1px solid rgba(255,255,255,.10);
+      background: rgba(7,10,16,.55);
+      color: var(--text);
+      outline:none;
+      font-size:14px;
+    }
+    textarea{min-height:120px; resize:vertical}
+    .form-row{display:grid; grid-template-columns:1fr 1fr; gap:10px}
+    @media (max-width: 980px){ .form-row{grid-template-columns:1fr} }
+    .fineprint{color:var(--muted); font-weight:650; font-size:12px; margin:8px 0 0}
+
+    /* Footer */
+    footer{
+      padding:26px 0 40px;
+      border-top:1px solid rgba(255,255,255,.10);
+      color:var(--muted);
+      font-weight:650;
+    }
+    .footerRow{
+      display:flex; justify-content:space-between; align-items:center;
+      gap:14px; flex-wrap:wrap;
+    }
+
+    /* Floating WhatsApp */
+    .waFloat{
+      position:fixed;
+      right:16px;
+      bottom:16px;
+      z-index:999;
+      box-shadow: 0 18px 50px rgba(0,0,0,.45);
+      border-radius:999px;
+    }
+  </style>
 </head>
+
 <body>
 
-<img src="IMG_0579.jpeg" alt="Logo">
-<div id="story"></div>
-<div id="brand">North Sentinel</div>
-<div id="countdown"></div>
+  <header class="topbar">
+    <div class="wrap">
+      <div class="row">
+        <div class="brand">
+          <div class="logo" aria-hidden="true"></div>
+          <div>VanTrip</div>
+        </div>
 
-<script>
-// Testo teaser
-const storyText = `Sta per nascere qualcosa di unico.
-Un marchio che sfida il consumismo e celebra l’autenticità.
-Preparati a scoprire uno stile nuovo e senza compromessi.`;
+        <nav class="nav" aria-label="Navigazione">
+          <a href="#viaggi">Prossimi viaggi</a>
+          <a href="#come">Come funziona</a>
+          <a href="#include">Cosa include</a>
+          <a href="#faq">FAQ</a>
+          <a href="#contatti">Contatti</a>
+        </nav>
 
-const storyElement = document.getElementById('story');
-const brandElement = document.getElementById('brand');
-const countdownElement = document.getElementById('countdown');
+        <div style="display:flex; gap:10px; align-items:center">
+          <a class="btn ghost" id="waTopLink" href="#" target="_blank" rel="noopener">WhatsApp</a>
+          <a class="btn primary" href="#viaggi">Prenota</a>
+        </div>
+      </div>
+    </div>
+  </header>
 
-let index = 0;
+  <main>
 
-// Effetto macchina da scrivere per il testo
-function typeWriter() {
-    if (index < storyText.length) {
-        storyElement.innerHTML += storyText.charAt(index);
-        index++;
-        setTimeout(typeWriter, 70); // più veloce
-    } else {
-        showBrand(); // mostra il brand alla fine del testo
+    <!-- HERO -->
+    <section class="hero">
+      <div class="wrap">
+        <div class="heroGrid">
+
+          <div>
+            <div class="kicker"><span class="dot"></span> Esperienze in camper • Piccoli gruppi • Natura</div>
+            <h1>Non è un noleggio.<br/>È un viaggio da vivere insieme.</h1>
+            <p class="lead">
+              VanTrip organizza avventure on the road in camper: itinerario, community e supporto durante il viaggio.
+              Tu pensi solo a partire.
+            </p>
+
+            <div class="heroActions">
+              <a class="btn primary" href="#viaggi">Scopri il prossimo VanTrip →</a>
+              <a class="btn" href="#contatti">Chiedi info su WhatsApp</a>
+            </div>
+
+            <div class="trustRow">
+              <span class="tag">✅ Camper attrezzato</span>
+              <span class="tag">🗺️ Itinerario</span>
+              <span class="tag">🤝 Gruppo & community</span>
+              <span class="tag">🛟 Supporto</span>
+            </div>
+          </div>
+
+          <aside class="glass heroVisual" aria-label="Card informativa">
+            <div class="photo" role="img" aria-label="Van in natura"></div>
+            <div class="body">
+              <h3 id="nextTripTitle">Prossima partenza</h3>
+              <p id="nextTripSubtitle">Posti limitati: piccoli gruppi per vivere davvero l’esperienza.</p>
+
+              <div class="miniGrid">
+                <div class="chip">📍 <em>Destinazione:</em><br/><span id="nextTripDest">—</span></div>
+                <div class="chip">🗓️ <em>Date:</em><br/><span id="nextTripDates">—</span></div>
+                <div class="chip">👥 <em>Gruppo:</em><br/><span id="nextTripGroup">—</span></div>
+                <div class="chip">🚐 <em>Durata:</em><br/><span id="nextTripDays">—</span></div>
+              </div>
+
+              <div style="margin-top:14px">
+                <button class="btn primary block" type="button" onclick="quickWhatsAppFromNextTrip()">
+                  Chiedi disponibilità su WhatsApp
+                </button>
+              </div>
+
+              <p class="fineprint">* Puoi modificare viaggi e testi nell’array <b>TRIPS</b> nel codice.</p>
+            </div>
+          </aside>
+
+        </div>
+      </div>
+    </section>
+
+    <!-- VALUE -->
+    <section>
+      <div class="wrap">
+        <div class="head">
+          <h2>Cos’è VanTrip</h2>
+          <p>Un’esperienza di viaggio alternativa: camper + natura + nuove persone. Il mezzo è solo l’inizio, l’obiettivo è l’avventura.</p>
+        </div>
+
+        <div class="grid3">
+          <div class="glass card">
+            <div class="icon">🚐</div>
+            <h3>Camper pronti a partire</h3>
+            <p>Camper attrezzati per vivere bene: dormi, cucini e ti godi il viaggio senza stress.</p>
+          </div>
+          <div class="glass card">
+            <div class="icon">🤝</div>
+            <h3>Piccoli gruppi, vibes giuste</h3>
+            <p>Conosci persone nuove e condividi tappe e momenti. Niente “tour di massa”.</p>
+          </div>
+          <div class="glass card">
+            <div class="icon">🗺️</div>
+            <h3>Itinerario + supporto</h3>
+            <p>Route, soste e spot. Ti aiutiamo prima e durante il viaggio.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- TRIPS -->
+    <section id="viaggi">
+      <div class="wrap">
+        <div class="head">
+          <h2>Prossimi VanTrip</h2>
+          <p>I viaggi qui sotto si aggiornano dall’array <b>TRIPS</b>. Per ogni card puoi far aprire WhatsApp già compilato.</p>
+        </div>
+
+        <div class="tripsGrid" id="tripsGrid"></div>
+      </div>
+    </section>
+
+    <!-- HOW -->
+    <section id="come">
+      <div class="wrap">
+        <div class="head">
+          <h2>Come funziona</h2>
+          <p>Quattro step semplici. Se vuoi, puoi creare anche un’esperienza su richiesta per gruppo privato.</p>
+        </div>
+
+        <div class="grid3">
+          <div class="glass card">
+            <div class="icon">1️⃣</div>
+            <h3>Scegli l’esperienza</h3>
+            <p>Destinazione, date e stile (relax, avventura, natura, foto, ecc.).</p>
+          </div>
+          <div class="glass card">
+            <div class="icon">2️⃣</div>
+            <h3>Blocca il posto</h3>
+            <p>Ti scriviamo i dettagli e ti confermiamo disponibilità e costi.</p>
+          </div>
+          <div class="glass card">
+            <div class="icon">3️⃣</div>
+            <h3>Ritiro + briefing</h3>
+            <p>Camper pronto e spiegazione rapida: poi si parte col gruppo.</p>
+          </div>
+        </div>
+
+        <div class="glass card" style="margin-top:12px">
+          <div class="icon">4️⃣</div>
+          <h3>Vivi l’avventura</h3>
+          <p>Community, tappe e spot. Libertà vera, ma con organizzazione semplice.</p>
+        </div>
+      </div>
+    </section>
+
+    <!-- INCLUDED + WHO -->
+    <section id="include">
+      <div class="wrap">
+        <div class="head">
+          <h2>Cosa include</h2>
+          <p>Personalizza questa lista in base al tuo servizio reale (assicurazioni, kit, attività, ecc.).</p>
+        </div>
+
+        <div class="split">
+          <div class="glass card">
+            <h3 style="margin-top:0">Incluso nell’esperienza</h3>
+            <ul style="margin:10px 0 0; padding-left:18px; color: rgba(244,248,255,.9); font-weight:750">
+              <li>Camper attrezzato (letto + cucina base)</li>
+              <li>Itinerario e tappe consigliate</li>
+              <li>Supporto prima e durante il viaggio</li>
+              <li>Gruppo / community VanTrip</li>
+              <li>Briefing iniziale + consigli pratici</li>
+            </ul>
+          </div>
+
+          <div class="glass card ctaPanel">
+            <h3 style="margin-top:0">Vuoi info subito?</h3>
+            <p style="margin:0 0 14px; color: rgba(244,248,255,.86); font-weight:750">
+              Clicca e scrivici: ti rispondiamo su WhatsApp con date, prezzi e disponibilità.
+            </p>
+            <a class="btn primary block" id="waInfoLink" href="#" target="_blank" rel="noopener">Scrivi su WhatsApp</a>
+            <p class="fineprint">Suggerimento: “posti limitati” aumenta le prenotazioni.</p>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- FAQ -->
+    <section id="faq">
+      <div class="wrap">
+        <div class="head">
+          <h2>FAQ</h2>
+          <p>Risposte rapide alle domande classiche.</p>
+        </div>
+
+        <details>
+          <summary>Serve esperienza per guidare un camper?</summary>
+          <p>No: ti facciamo un briefing iniziale e ti diamo consigli pratici.</p>
+        </details>
+
+        <details>
+          <summary>È un viaggio “guidato” tipo tour?</summary>
+          <p>È un’esperienza organizzata con community: route e tappe consigliate, ma atmosfera informale e libertà.</p>
+        </details>
+
+        <details>
+          <summary>Posso partecipare da solo/a?</summary>
+          <p>Sì. Molti partono da soli per conoscere nuove persone e vivere il viaggio in gruppo.</p>
+        </details>
+      </div>
+    </section>
+
+    <!-- CONTACT -->
+    <section id="contatti">
+      <div class="wrap">
+        <div class="head">
+          <h2>Prenota su WhatsApp</h2>
+          <p>Compila e clicca: si apre WhatsApp con il messaggio già pronto (tu lo ricevi direttamente su WhatsApp normale o Business).</p>
+        </div>
+
+        <div class="split">
+          <div class="glass card">
+            <h3 style="margin-top:0">Richiesta rapida</h3>
+
+            <form onsubmit="return false;">
+              <div class="form-row">
+                <div>
+                  <label for="nome">Nome</label>
+                  <input id="nome" name="nome" placeholder="Il tuo nome" required>
+                </div>
+                <div>
+                  <label for="telefono">Telefono</label>
+                  <input id="telefono" name="telefono" placeholder="+39 ..." required>
+                </div>
+              </div>
+
+              <div class="form-row">
+                <div>
+                  <label for="email">Email (opzionale)</label>
+                  <input id="email" name="email" type="email" placeholder="nome@email.it">
+                </div>
+                <div>
+                  <label for="viaggio">Viaggio interessato</label>
+                  <select id="viaggio" name="viaggio" required></select>
+                </div>
+              </div>
+
+              <div>
+                <label for="msg">Messaggio</label>
+                <textarea id="msg" name="msg" placeholder="Periodo, numero persone, cosa cerchi (relax/avventura/natura)..." required></textarea>
+              </div>
+
+              <button class="btn primary block" type="button" onclick="sendWhatsAppFromForm()">
+                Prenota su WhatsApp
+              </button>
+
+              <p class="fineprint">
+                Se WhatsApp ti chiede conferma, è normale: il sito sta aprendo la chat con testo precompilato.
+              </p>
+            </form>
+          </div>
+
+          <div class="glass card">
+            <h3 style="margin-top:0">Contatto diretto</h3>
+            <p style="margin:0 0 14px; color:var(--muted); font-weight:650">
+              Preferisci scrivere senza compilare? Clicca qui:
+            </p>
+            <a class="btn primary block" id="waDirectLink" href="#" target="_blank" rel="noopener">💬 WhatsApp diretto</a>
+
+            <div style="margin-top:14px">
+              <div class="tag">📸 Instagram: @vantrip</div>
+              <div style="height:10px"></div>
+              <div class="tag">⏱️ Risposta veloce</div>
+            </div>
+
+            <div style="margin-top:14px">
+              <a class="btn ghost block" href="#viaggi">Torna ai viaggi</a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </section>
+
+  </main>
+
+  <footer>
+    <div class="wrap">
+      <div class="footerRow">
+        <div>© <span id="year"></span> VanTrip • Viaggi in camper con gruppo</div>
+        <div style="display:flex; gap:12px; flex-wrap:wrap">
+          <a href="#faq">FAQ</a>
+          <a href="#contatti">Contatti</a>
+          <a href="#" onclick="alert('Aggiungi qui Privacy/Termini'); return false;">Privacy</a>
+        </div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- WhatsApp floating button -->
+  <a class="btn primary waFloat" id="waFloatLink" href="#" target="_blank" rel="noopener">
+    💬 WhatsApp
+  </a>
+
+  <script>
+    // ====== CAMBIA SOLO QUESTO ======
+    const WHATSAPP_NUMBER = "391234567890"; // <-- metti il TUO numero (senza + e senza spazi). Es: 393331234567
+
+    // ====== VIAGGI: aggiorna qui ======
+    const TRIPS = [
+      {
+        id: "dolomiti",
+        emoji: "⛰️",
+        title: "Dolomiti VanTrip",
+        destination: "Dolomiti",
+        dates: "da definire",
+        days: "4 giorni",
+        group: "8–12",
+        vibe: "natura + vibe",
+        spots: "laghi, passi, notti sotto le stelle",
+        desc: "Laghi, strade panoramiche e spot incredibili. Perfetto per staccare davvero.",
+        seats: "Posti limitati",
+        photo: "https://images.unsplash.com/photo-1501785888041-af3ef285b470?auto=format&fit=crop&w=1400&q=80"
+      },
+      {
+        id: "coast",
+        emoji: "🌊",
+        title: "Coast RoadTrip",
+        destination: "Costa",
+        dates: "da definire",
+        days: "3–5 giorni",
+        group: "6–10",
+        vibe: "mare + relax",
+        spots: "tramonti, spiagge, road vibes",
+        desc: "Strade costiere, spiagge e tramonti. La vanlife più easy e bella.",
+        seats: "Ultimi posti",
+        photo: "https://images.unsplash.com/photo-1520962917969-53d254a7f3c8?auto=format&fit=crop&w=1400&q=80"
+      },
+      {
+        id: "lakes",
+        emoji: "🏞️",
+        title: "Lakes & Forest",
+        destination: "Laghi & boschi",
+        dates: "da definire",
+        days: "Weekend",
+        group: "6–12",
+        vibe: "spot top",
+        spots: "lago, bosco, chill",
+        desc: "Weekend alternativo: lago, boschi e soste in posti pazzeschi.",
+        seats: "Posti limitati",
+        photo: "https://images.unsplash.com/photo-1526481280695-3c687fd5432c?auto=format&fit=crop&w=1400&q=80"
+      }
+    ];
+
+    // ====== Helpers ======
+    function waUrl(text){
+      return `https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(text)}`;
     }
-}
 
-typeWriter();
+    function baseInfoText(){
+      return `Ciao VanTrip! 🚐\nVorrei info sui prossimi viaggi.\n`;
+    }
 
-// Mostra il brand con effetto fade-in
-function showBrand() {
-    brandElement.style.opacity = 1; // fade-in in 2 secondi
-    setTimeout(showCountdown, 2000); // dopo 2 secondi appare il countdown
-}
+    // ====== Render Trips ======
+    function renderTrips(){
+      const grid = document.getElementById("tripsGrid");
+      grid.innerHTML = TRIPS.map(t => `
+        <article class="glass trip">
+          <div class="photo" style="background-image:url('${t.photo}')"></div>
+          <div class="content">
+            <div class="titleRow">
+              <p class="tripTitle">${t.emoji} ${t.title}</p>
+              <span class="pillSmall">${t.seats}</span>
+            </div>
 
-// Countdown fisso
-function showCountdown() {
-    countdownElement.style.opacity = 1;
+            <div class="meta">
+              <span>📍 ${t.destination}</span>
+              <span>🗓️ ${t.dates}</span>
+              <span>🚐 ${t.days}</span>
+              <span>👥 ${t.group}</span>
+              <span>🔥 ${t.vibe}</span>
+            </div>
 
-    // Data di lancio fissa (es. 16 marzo 2026)
-    const launchDate = new Date("2026-03-16T00:00:00").getTime();
+            <p style="margin:0 0 12px; color:var(--muted); font-weight:650">${t.desc}</p>
 
-    const interval = setInterval(() => {
-        const now = new Date().getTime();
-        const distance = launchDate - now;
+            <button class="btn primary block" type="button" onclick="openTripWhatsApp('${t.id}')">
+              Prenota / Info su WhatsApp
+            </button>
+          </div>
+        </article>
+      `).join("");
+    }
 
-        if (distance < 0) {
-            clearInterval(interval);
-            countdownElement.innerHTML = "Il marchio è nato!";
-            return;
-        }
+    function fillTripSelect(){
+      const sel = document.getElementById("viaggio");
+      sel.innerHTML = `
+        <option value="" selected disabled>Scegli un VanTrip</option>
+        ${TRIPS.map(t => `<option value="${t.title}">${t.title}</option>`).join("")}
+        <option value="Altro / su richiesta">Altro / su richiesta</option>
+      `;
+    }
 
-        const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-        const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-        const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-        const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+    // ====== WhatsApp actions ======
+    function openTripWhatsApp(tripId){
+      const t = TRIPS.find(x => x.id === tripId);
+      const text =
+`Ciao VanTrip! 🚐
+Vorrei info/prenotare:
 
-        countdownElement.innerHTML = `Countdown: ${days}g ${hours}h ${minutes}m ${seconds}s`;
-    }, 1000);
-}
-</script>
+Viaggio: ${t.title}
+Destinazione: ${t.destination}
+Date: ${t.dates}
+Durata: ${t.days}
+Gruppo: ${t.group}
 
+Mi potete dire disponibilità e prezzi?`;
+      window.open(waUrl(text), "_blank");
+    }
+
+    function quickWhatsAppFromNextTrip(){
+      // Usa il primo trip come "prossima partenza"
+      openTripWhatsApp(TRIPS[0].id);
+    }
+
+    function sendWhatsAppFromForm(){
+      const nome = document.getElementById('nome').value.trim();
+      const telefono = document.getElementById('telefono').value.trim();
+      const email = document.getElementById('email').value.trim();
+      const viaggio = document.getElementById('viaggio').value;
+      const msg = document.getElementById('msg').value.trim();
+
+      if(!nome || !telefono || !viaggio || !msg){
+        alert("Compila Nome, Telefono, Viaggio e Messaggio 🙂");
+        return;
+      }
+
+      const text =
+`Ciao VanTrip! 🚐
+Vorrei info/prenotare.
+
+Nome: ${nome}
+Telefono: ${telefono}
+Email: ${email || "—"}
+Viaggio: ${viaggio}
+
+Messaggio:
+${msg}`;
+
+      window.open(waUrl(text), "_blank");
+    }
+
+    // ====== Init ======
+    function init(){
+      document.getElementById('year').textContent = new Date().getFullYear();
+
+      renderTrips();
+      fillTripSelect();
+
+      // Hero: metti dati del primo viaggio
+      const t = TRIPS[0];
+      document.getElementById('nextTripDest').textContent = t.destination;
+      document.getElementById('nextTripDates').textContent = t.dates;
+      document.getElementById('nextTripGroup').textContent = t.group;
+      document.getElementById('nextTripDays').textContent = t.days;
+
+      // Link WhatsApp generici
+      const genericText = baseInfoText() + "\nMi potete dire prossime date e prezzi?";
+      const links = ["waTopLink", "waInfoLink", "waDirectLink", "waFloatLink"];
+      links.forEach(id => {
+        const el = document.getElementById(id);
+        if(el) el.href = waUrl(genericText);
+      });
+    }
+    init();
+  </script>
 </body>
 </html>
