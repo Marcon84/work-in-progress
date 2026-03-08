@@ -2,50 +2,49 @@
 <html lang="it">
 <head>
   <meta charset="utf-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1" />
-  <title>VanTrip — Avventure in Camper con Gruppo</title>
-  <meta name="description" content="VanTrip organizza esperienze in camper con piccoli gruppi: itinerario, community e supporto. Prenota su WhatsApp." />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>VanTrip — Esperienze in camper con piccoli gruppi</title>
+  <meta name="description" content="VanTrip organizza esperienze in camper con piccoli gruppi: natura, itinerario, supporto e libertà. Prenota su WhatsApp." />
 
   <style>
     :root{
-      --bg:#070A10;
-      --panel:rgba(255,255,255,.06);
-      --panel2:rgba(255,255,255,.04);
+      --bg:#0b0f14;
+      --bg-soft:#121924;
+      --card:rgba(255,255,255,.06);
+      --card-2:rgba(255,255,255,.04);
       --stroke:rgba(255,255,255,.10);
-      --text:rgba(244,248,255,.96);
-      --muted:rgba(244,248,255,.70);
-      --brand:#78FFB6;
-      --brand2:#78C8FF;
-      --shadow:0 18px 60px rgba(0,0,0,.45);
-      --radius:18px;
-      --max:1120px;
+      --text:#eef4ff;
+      --muted:rgba(238,244,255,.74);
+      --brand:#d8c3a0;
+      --brand-dark:#0c2b3b;
+      --shadow:0 18px 60px rgba(0,0,0,.42);
+      --radius:20px;
+      --max:1180px;
     }
 
     *{box-sizing:border-box}
-    html,body{height:100%}
-
+    html{scroll-behavior:smooth}
     body{
       margin:0;
-      font-family:ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      font-family:Inter,ui-sans-serif,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
       color:var(--text);
       background:
-        radial-gradient(1100px 700px at 20% 10%, rgba(120,255,182,.18), transparent 58%),
-        radial-gradient(1000px 680px at 85% 0%, rgba(120,200,255,.18), transparent 55%),
-        radial-gradient(900px 600px at 70% 85%, rgba(120,255,182,.12), transparent 60%),
-        var(--bg);
+        radial-gradient(1000px 600px at 20% 0%, rgba(216,195,160,.10), transparent 55%),
+        radial-gradient(900px 600px at 90% 10%, rgba(12,43,59,.28), transparent 60%),
+        linear-gradient(180deg,#0b0f14 0%,#0e141c 100%);
       line-height:1.55;
       overflow-x:hidden;
     }
 
-    a{color:inherit;text-decoration:none}
-    .wrap{max-width:var(--max);margin:0 auto;padding:0 20px}
+    img{display:block;max-width:100%}
+    a{text-decoration:none;color:inherit}
+    .wrap{max-width:var(--max);margin:0 auto;padding:0 22px}
 
     .glass{
-      background:linear-gradient(180deg,var(--panel),var(--panel2));
+      background:linear-gradient(180deg,var(--card),var(--card-2));
       border:1px solid var(--stroke);
-      box-shadow:var(--shadow);
       border-radius:var(--radius);
-      overflow:hidden;
+      box-shadow:var(--shadow);
     }
 
     .btn{
@@ -53,399 +52,498 @@
       align-items:center;
       justify-content:center;
       gap:10px;
-      padding:12px 16px;
+      padding:13px 18px;
       border-radius:999px;
       border:1px solid var(--stroke);
       background:rgba(255,255,255,.04);
-      font-weight:900;
-      font-size:14px;
-      cursor:pointer;
-      transition:transform .15s ease, background .2s ease, border-color .2s ease;
-      user-select:none;
-      white-space:nowrap;
       color:var(--text);
+      font-size:14px;
+      font-weight:900;
+      cursor:pointer;
+      transition:transform .16s ease, background .2s ease, border-color .2s ease;
+      white-space:nowrap;
     }
-
     .btn:hover{
       transform:translateY(-1px);
-      background:rgba(255,255,255,.06);
+      background:rgba(255,255,255,.07);
     }
-
     .btn.primary{
-      border-color:rgba(120,255,182,.28);
-      background:linear-gradient(135deg, rgba(120,255,182,.18), rgba(120,200,255,.14));
+      background:linear-gradient(135deg, rgba(216,195,160,.22), rgba(12,43,59,.40));
+      border-color:rgba(216,195,160,.30);
     }
-
     .btn.primary:hover{
-      border-color:rgba(120,255,182,.45);
+      border-color:rgba(216,195,160,.50);
     }
-
-    .btn.ghost{background:rgba(255,255,255,.03)}
     .btn.block{width:100%}
+    .btn.ghost{background:rgba(255,255,255,.03)}
 
     .tag{
       display:inline-flex;
       align-items:center;
       gap:8px;
-      padding:7px 11px;
+      padding:8px 12px;
       border-radius:999px;
       border:1px solid var(--stroke);
       background:rgba(255,255,255,.03);
-      font-weight:850;
       font-size:12px;
-      color:rgba(244,248,255,.92);
+      font-weight:850;
+      color:rgba(238,244,255,.92);
     }
 
-    .kicker{
+    .section{padding:58px 0}
+    .section-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-end;
+      gap:18px;
+      margin-bottom:18px;
+    }
+    .section-head h2{
+      margin:0;
+      font-size:30px;
+      letter-spacing:-.5px;
+    }
+    .section-head p{
+      margin:0;
+      max-width:62ch;
+      color:var(--muted);
+      font-weight:650;
+    }
+
+    /* HEADER */
+    .topbar{
+      position:sticky;
+      top:0;
+      z-index:50;
+      background:rgba(11,15,20,.72);
+      backdrop-filter:blur(12px);
+      border-bottom:1px solid rgba(255,255,255,.08);
+    }
+    .topbar .row{
+      min-height:78px;
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px;
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:14px;
+      min-width:0;
+    }
+    .brand-logo{
+      width:58px;
+      height:58px;
+      object-fit:contain;
+      border-radius:14px;
+      background:rgba(255,255,255,.02);
+      flex-shrink:0;
+    }
+    .brand-text{
+      display:flex;
+      flex-direction:column;
+      line-height:1.05;
+    }
+    .brand-text strong{
+      font-size:22px;
+      letter-spacing:.08em;
+      font-weight:900;
+      color:var(--text);
+    }
+    .brand-text span{
+      font-size:11px;
+      color:var(--muted);
+      letter-spacing:.18em;
+      text-transform:uppercase;
+      margin-top:4px;
+    }
+
+    .nav{
+      display:flex;
+      align-items:center;
+      gap:18px;
+      color:var(--muted);
+      font-size:14px;
+      font-weight:800;
+    }
+    .nav a:hover{color:var(--text)}
+
+    .top-actions{
+      display:flex;
+      align-items:center;
+      gap:10px;
+    }
+
+    /* HERO */
+    .hero{padding:22px 0 12px}
+    .hero-shell{
+      position:relative;
+      min-height:84vh;
+      border-radius:28px;
+      overflow:hidden;
+      border:1px solid rgba(255,255,255,.08);
+      box-shadow:var(--shadow);
+      background:#0c1118;
+    }
+    .hero-bg{
+      position:absolute;
+      inset:0;
+      background:
+        linear-gradient(180deg, rgba(11,15,20,.18), rgba(11,15,20,.58)),
+        linear-gradient(90deg, rgba(11,15,20,.84) 0%, rgba(11,15,20,.44) 45%, rgba(11,15,20,.18) 100%),
+        url("22C21893-B0ED-4673-B5C1-C1902D4E01F2.png");
+      background-size:cover;
+      background-position:center;
+      transform:scale(1.02);
+    }
+    .hero-inner{
+      position:relative;
+      z-index:2;
+      min-height:84vh;
+      display:grid;
+      grid-template-columns:1.05fr .95fr;
+      gap:20px;
+      align-items:end;
+      padding:34px;
+    }
+    .hero-copy{
+      align-self:center;
+      max-width:700px;
+    }
+    .eyebrow{
       display:inline-flex;
       align-items:center;
       gap:10px;
       padding:8px 12px;
       border-radius:999px;
-      border:1px solid rgba(120,255,182,.22);
-      background:rgba(120,255,182,.10);
+      border:1px solid rgba(216,195,160,.22);
+      background:rgba(216,195,160,.10);
+      font-size:13px;
       font-weight:900;
-      font-size:13px;
-      width:fit-content;
     }
-
-    .dot{
-      width:8px;
-      height:8px;
-      border-radius:50%;
+    .eyebrow-dot{
+      width:8px;height:8px;border-radius:50%;
       background:var(--brand);
-      box-shadow:0 0 0 6px rgba(120,255,182,.12);
+      box-shadow:0 0 0 6px rgba(216,195,160,.10);
     }
-
-    .topbar{
-      position:sticky;
-      top:0;
-      z-index:50;
-      backdrop-filter:blur(10px);
-      background:rgba(7,10,16,.70);
-      border-bottom:1px solid rgba(255,255,255,.08);
+    .hero h1{
+      margin:14px 0 12px;
+      font-size:clamp(40px,5.2vw,74px);
+      line-height:1.01;
+      letter-spacing:-1px;
+      max-width:11ch;
     }
-
-    .topbar .row{
-      display:flex;
-      align-items:center;
-      justify-content:space-between;
-      padding:14px 0;
-      gap:12px;
-    }
-
-    .brand{
-      display:flex;
-      align-items:center;
-      gap:10px;
-      font-weight:950;
-      letter-spacing:.2px;
-    }
-
-    .logo{
-      width:36px;
-      height:36px;
-      border-radius:12px;
-      background:linear-gradient(135deg, rgba(120,255,182,.95), rgba(120,200,255,.95));
-      position:relative;
-      box-shadow:0 16px 40px rgba(120,255,182,.10);
-      flex-shrink:0;
-    }
-
-    .logo:after{
-      content:"";
-      position:absolute;
-      inset:9px;
-      border-radius:10px;
-      border:2px solid rgba(7,10,16,.55);
-    }
-
-    .nav{
-      display:flex;
-      gap:16px;
-      color:var(--muted);
-      font-weight:800;
-      font-size:14px;
-    }
-
-    .nav a:hover{color:var(--text)}
-
-    @media (max-width:920px){
-      .nav{display:none}
-    }
-
-    .hero{padding:58px 0 18px}
-
-    .heroGrid{
-      display:grid;
-      grid-template-columns:1.15fr .85fr;
-      gap:18px;
-      align-items:stretch;
-    }
-
-    @media (max-width:980px){
-      .heroGrid{grid-template-columns:1fr}
-    }
-
-    h1{
-      font-size:clamp(34px, 4.4vw, 58px);
-      line-height:1.03;
-      margin:14px 0 14px;
-      letter-spacing:-.7px;
-    }
-
-    .lead{
-      margin:0 0 18px;
-      color:rgba(244,248,255,.82);
-      font-size:clamp(16px,1.8vw,18px);
-      max-width:60ch;
+    .hero p{
+      margin:0;
+      max-width:58ch;
+      color:rgba(238,244,255,.84);
+      font-size:clamp(16px,1.8vw,19px);
       font-weight:650;
     }
-
-    .heroActions{
+    .hero-actions{
       display:flex;
       gap:12px;
       flex-wrap:wrap;
-      margin:8px 0 10px;
+      margin-top:22px;
     }
-
-    .trustRow{
+    .hero-trust{
       display:flex;
       gap:10px;
       flex-wrap:wrap;
-      margin-top:10px;
+      margin-top:16px;
     }
 
-    .trustRow .tag{
-      font-weight:800;
-      color:rgba(244,248,255,.88);
+    .hero-card{
+      align-self:end;
+      justify-self:end;
+      width:min(100%,430px);
+      padding:18px;
     }
-
-    .heroVisual{
-      position:relative;
-      min-height:360px;
-    }
-
-    .heroVisual .photo{
-      height:230px;
-      background-size:cover;
-      background-position:center;
-      border-bottom:1px solid rgba(255,255,255,.10);
-    }
-
-    .heroVisual .body{padding:16px 16px 18px}
-    .heroVisual h3{margin:0 0 6px;font-size:18px}
-    .heroVisual p{margin:0;color:var(--muted);font-weight:650}
-
-    .miniGrid{
-      margin-top:12px;
-      display:grid;
-      grid-template-columns:1fr 1fr;
-      gap:10px;
-    }
-
-    .chip{
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(255,255,255,.03);
-      border-radius:14px;
-      padding:10px;
-      font-size:13px;
-      font-weight:850;
-      color:rgba(244,248,255,.88);
-    }
-
-    .chip em{
-      font-style:normal;
-      color:var(--muted);
-      font-weight:650;
-    }
-
-    section{padding:40px 0}
-
-    .head{
+    .hero-card-head{
       display:flex;
-      align-items:flex-end;
       justify-content:space-between;
-      gap:16px;
+      align-items:flex-start;
+      gap:12px;
       margin-bottom:14px;
     }
-
-    .head h2{
+    .hero-card h3{
       margin:0;
-      font-size:28px;
-      letter-spacing:-.3px;
-    }
-
-    .head p{
-      margin:0;
-      color:var(--muted);
-      font-weight:650;
-      max-width:68ch;
-    }
-
-    .grid3{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:12px;
-    }
-
-    @media (max-width:980px){
-      .grid3{grid-template-columns:1fr}
-    }
-
-    .card{padding:18px}
-
-    .icon{
-      width:46px;
-      height:46px;
-      border-radius:16px;
-      display:flex;
-      align-items:center;
-      justify-content:center;
-      background:linear-gradient(135deg, rgba(120,255,182,.15), rgba(120,200,255,.12));
-      border:1px solid rgba(120,255,182,.16);
-      margin-bottom:12px;
       font-size:20px;
     }
-
-    .card h3{margin:0 0 6px;font-size:18px}
-    .card p{margin:0;color:var(--muted);font-weight:650}
-
-    .tripsGrid{
-      display:grid;
-      grid-template-columns:repeat(3, 1fr);
-      gap:12px;
+    .hero-card p{
+      margin:4px 0 0;
+      font-size:14px;
+      color:var(--muted);
     }
-
-    @media (max-width:980px){
-      .tripsGrid{grid-template-columns:1fr}
-    }
-
-    .trip{padding:0}
-
-    .trip .photo{
-      height:180px;
-      background-size:cover;
-      background-position:center;
-      border-bottom:1px solid rgba(255,255,255,.10);
-      position:relative;
-    }
-
-    .trip .photo:after{
-      content:"";
-      position:absolute;
-      inset:0;
-      background:linear-gradient(180deg, rgba(7,10,16,.05), rgba(7,10,16,.78));
-    }
-
-    .trip .content{
-      padding:16px 16px 18px;
-      position:relative;
-    }
-
-    .titleRow{
-      display:flex;
-      align-items:flex-start;
-      justify-content:space-between;
-      gap:10px;
-      margin-bottom:10px;
-    }
-
-    .tripTitle{
-      font-weight:950;
-      font-size:16px;
-      margin:0;
-    }
-
-    .pillSmall{
-      display:inline-flex;
-      align-items:center;
-      gap:8px;
-      padding:6px 10px;
-      border-radius:999px;
-      background:rgba(255,255,255,.03);
-      border:1px solid rgba(255,255,255,.10);
-      color:rgba(244,248,255,.86);
-      font-weight:900;
-      font-size:12px;
-      white-space:nowrap;
-    }
-
-    .meta{
-      display:flex;
-      flex-wrap:wrap;
-      gap:8px;
-      margin:8px 0 12px;
-    }
-
-    .meta span{
+    .badge{
       display:inline-flex;
       align-items:center;
       gap:8px;
       padding:7px 10px;
       border-radius:999px;
-      border:1px solid rgba(255,255,255,.10);
+      background:rgba(216,195,160,.10);
+      border:1px solid rgba(216,195,160,.20);
+      color:#f4e6d0;
+      font-size:12px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .mini-grid{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin-bottom:14px;
+    }
+    .mini-item{
+      padding:12px;
+      border-radius:16px;
+      border:1px solid var(--stroke);
       background:rgba(255,255,255,.03);
-      color:rgba(244,248,255,.84);
+      font-size:13px;
       font-weight:850;
-      font-size:12.5px;
+      color:rgba(238,244,255,.90);
+    }
+    .mini-item em{
+      display:block;
+      font-style:normal;
+      color:var(--muted);
+      font-size:12px;
+      font-weight:650;
+      margin-bottom:4px;
+    }
+    .mini-desc{
+      margin:0 0 14px;
+      color:var(--muted);
+      font-weight:650;
+    }
+
+    /* FEATURED */
+    .featured{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:16px;
+      align-items:stretch;
+    }
+    .featured-photo{
+      min-height:380px;
+      background-size:cover;
+      background-position:center;
+      border-radius:22px;
+      border:1px solid var(--stroke);
+      box-shadow:var(--shadow);
+      position:relative;
+      overflow:hidden;
+    }
+    .featured-photo::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(11,15,20,.06), rgba(11,15,20,.34));
+    }
+    .featured-card{
+      padding:24px;
+    }
+    .featured-card .label{
+      margin-bottom:12px;
+    }
+    .featured-card h3{
+      margin:0;
+      font-size:32px;
+      letter-spacing:-.5px;
+    }
+    .featured-card p{
+      margin:10px 0 0;
+      color:var(--muted);
+      font-weight:650;
+    }
+    .info-badges{
+      display:flex;
+      flex-wrap:wrap;
+      gap:10px;
+      margin:14px 0 16px;
+    }
+    .info-badges span{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:8px 11px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.03);
+      font-size:13px;
+      font-weight:850;
+      color:rgba(238,244,255,.88);
+    }
+    .include-boxes{
+      display:grid;
+      grid-template-columns:1fr 1fr;
+      gap:10px;
+      margin:16px 0 18px;
+    }
+    .include-pill{
+      padding:12px;
+      border-radius:16px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.03);
+      font-size:14px;
+      font-weight:800;
+    }
+
+    /* TRIPS */
+    .trip-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+    .trip-card{overflow:hidden}
+    .trip-image{
+      height:220px;
+      background-size:cover;
+      background-position:center;
+      border-bottom:1px solid var(--stroke);
+      position:relative;
+    }
+    .trip-image::after{
+      content:"";
+      position:absolute;
+      inset:0;
+      background:linear-gradient(180deg, rgba(11,15,20,.04), rgba(11,15,20,.70));
+    }
+    .trip-body{padding:18px}
+    .trip-head{
+      display:flex;
+      justify-content:space-between;
+      align-items:flex-start;
+      gap:10px;
+      margin-bottom:12px;
+    }
+    .trip-head h3{
+      margin:0;
+      font-size:18px;
+      line-height:1.2;
+    }
+    .trip-pill{
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid rgba(216,195,160,.18);
+      background:rgba(216,195,160,.08);
+      color:#f4e6d0;
+      font-size:12px;
+      font-weight:900;
+      white-space:nowrap;
+    }
+    .trip-meta{
+      display:flex;
+      flex-wrap:wrap;
+      gap:8px;
+      margin-bottom:12px;
+    }
+    .trip-meta span{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      padding:7px 10px;
+      border-radius:999px;
+      border:1px solid var(--stroke);
+      background:rgba(255,255,255,.03);
+      font-size:12px;
+      font-weight:850;
+      color:rgba(238,244,255,.86);
+    }
+    .trip-body p{
+      margin:0 0 16px;
+      color:var(--muted);
+      font-weight:650;
+    }
+
+    /* CARDS GENERIC */
+    .feature-grid,.step-grid,.quote-grid{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:14px;
+    }
+    .feature-card,.step-card,.quote-card,.include-card,.cta-card{
+      padding:20px;
+    }
+    .iconbox{
+      width:48px;
+      height:48px;
+      border-radius:16px;
+      display:flex;
+      align-items:center;
+      justify-content:center;
+      background:linear-gradient(135deg, rgba(216,195,160,.12), rgba(12,43,59,.26));
+      border:1px solid rgba(216,195,160,.14);
+      margin-bottom:12px;
+      font-size:21px;
+    }
+    .feature-card h3,.step-card h3,.quote-card h3,.include-card h3,.cta-card h3{
+      margin:0 0 6px;
+      font-size:18px;
+    }
+    .feature-card p,.step-card p,.quote-card p,.include-card p,.cta-card p{
+      margin:0;
+      color:var(--muted);
+      font-weight:650;
     }
 
     .split{
       display:grid;
       grid-template-columns:1fr 1fr;
-      gap:12px;
+      gap:14px;
+    }
+    .include-list{
+      margin:12px 0 0;
+      padding-left:18px;
+      color:rgba(238,244,255,.92);
+      font-weight:750;
+    }
+    .include-list li+li{margin-top:8px}
+
+    .quote{
+      margin:0 0 10px;
+      font-size:16px;
+      color:rgba(238,244,255,.94);
+      font-weight:760;
+    }
+    .quote-by{
+      margin:0;
+      color:var(--muted);
+      font-size:13px;
+      font-weight:800;
     }
 
-    @media (max-width:980px){
-      .split{grid-template-columns:1fr}
-    }
-
-    .ctaPanel{
-      background:linear-gradient(135deg, rgba(120,255,182,.12), rgba(120,200,255,.10));
-      border-color:rgba(120,255,182,.18);
-    }
-
-    .faqList{
-      display:grid;
-      gap:10px;
-    }
-
-    .faqItem{
-      border:1px solid rgba(255,255,255,.10);
+    /* FAQ */
+    .faq-list{display:grid;gap:10px}
+    .faq-item{
+      border:1px solid var(--stroke);
       background:rgba(255,255,255,.03);
-      border-radius:16px;
+      border-radius:18px;
       overflow:hidden;
     }
-
-    .faqQuestion{
+    .faq-q{
       width:100%;
       background:none;
       border:none;
-      color:rgba(244,248,255,.92);
-      font-weight:950;
-      font-size:15px;
+      color:var(--text);
       text-align:left;
-      padding:16px 18px;
-      cursor:pointer;
+      padding:17px 18px;
       display:flex;
-      align-items:center;
       justify-content:space-between;
-      gap:16px;
+      align-items:center;
+      gap:14px;
+      font-size:15px;
+      font-weight:900;
+      cursor:pointer;
     }
-
-    .faqQuestion span:last-child{
+    .faq-q span:last-child{
       font-size:18px;
       color:var(--muted);
       transition:transform .2s ease;
-      flex-shrink:0;
     }
-
-    .faqItem.active .faqQuestion span:last-child{
-      transform:rotate(45deg);
-    }
-
-    .faqAnswer{
+    .faq-item.active .faq-q span:last-child{transform:rotate(45deg)}
+    .faq-a{
       max-height:0;
       overflow:hidden;
       transition:max-height .25s ease;
@@ -453,64 +551,52 @@
       font-weight:650;
       padding:0 18px;
     }
+    .faq-a-inner{padding:0 0 16px}
+    .faq-item.active .faq-a{max-height:240px}
 
-    .faqAnswerInner{
-      padding:0 0 16px;
-    }
-
-    .faqItem.active .faqAnswer{
-      max-height:220px;
-    }
-
+    /* FORM */
     form{display:grid;gap:10px}
-
-    label{
-      font-weight:900;
-      font-size:13px;
-      color:rgba(244,248,255,.92);
-    }
-
-    input, select, textarea{
-      width:100%;
-      padding:12px 12px;
-      border-radius:14px;
-      border:1px solid rgba(255,255,255,.10);
-      background:rgba(7,10,16,.55);
-      color:var(--text);
-      outline:none;
-      font-size:14px;
-    }
-
-    textarea{
-      min-height:120px;
-      resize:vertical;
-    }
-
     .form-row{
       display:grid;
       grid-template-columns:1fr 1fr;
       gap:10px;
     }
-
-    @media (max-width:980px){
-      .form-row{grid-template-columns:1fr}
+    label{
+      display:block;
+      margin-bottom:6px;
+      font-size:13px;
+      font-weight:900;
+      color:rgba(238,244,255,.92);
     }
-
-    .fineprint{
+    input,select,textarea{
+      width:100%;
+      border:1px solid var(--stroke);
+      background:rgba(11,15,20,.55);
+      color:var(--text);
+      border-radius:14px;
+      padding:12px 12px;
+      font-size:14px;
+      outline:none;
+    }
+    textarea{
+      min-height:120px;
+      resize:vertical;
+    }
+    .fine{
+      margin:10px 0 0;
       color:var(--muted);
-      font-weight:650;
       font-size:12px;
-      margin:8px 0 0;
-    }
-
-    footer{
-      padding:26px 0 40px;
-      border-top:1px solid rgba(255,255,255,.10);
-      color:var(--muted);
       font-weight:650;
     }
 
-    .footerRow{
+    /* FOOTER */
+    footer{
+      padding:28px 0 42px;
+      border-top:1px solid rgba(255,255,255,.08);
+      color:var(--muted);
+      font-weight:650;
+    }
+    .footer-row{
       display:flex;
       justify-content:space-between;
       align-items:center;
@@ -518,13 +604,35 @@
       flex-wrap:wrap;
     }
 
-    .waFloat{
+    .wa-float{
       position:fixed;
       right:16px;
       bottom:16px;
-      z-index:999;
-      box-shadow:0 18px 50px rgba(0,0,0,.45);
-      border-radius:999px;
+      z-index:60;
+      box-shadow:0 18px 40px rgba(0,0,0,.36);
+    }
+
+    @media (max-width: 1080px){
+      .hero-inner,.featured,.split{grid-template-columns:1fr}
+      .trip-grid,.feature-grid,.step-grid,.quote-grid{grid-template-columns:1fr 1fr}
+      .hero-shell,.hero-inner{min-height:auto}
+      .hero-inner{padding:24px}
+      .hero-card{width:100%;justify-self:stretch}
+      .hero h1{max-width:none}
+    }
+
+    @media (max-width: 760px){
+      .nav{display:none}
+      .top-actions .btn:first-child{display:none}
+      .hero{padding:14px 0 8px}
+      .hero-shell{border-radius:22px}
+      .hero h1{font-size:42px}
+      .hero-actions{flex-direction:column;align-items:stretch}
+      .hero-actions .btn{width:100%}
+      .trip-grid,.feature-grid,.step-grid,.quote-grid,.form-row,.include-boxes,.mini-grid{grid-template-columns:1fr}
+      .section{padding:44px 0}
+      .brand-logo{width:48px;height:48px}
+      .brand-text strong{font-size:18px}
     }
   </style>
 </head>
@@ -533,22 +641,25 @@
   <header class="topbar">
     <div class="wrap">
       <div class="row">
-        <div class="brand">
-          <div class="logo" aria-hidden="true"></div>
-          <div id="brandName">VanTrip</div>
-        </div>
+        <a class="brand" href="#">
+          <img class="brand-logo" id="headerLogo" src="56E46105-97AB-474A-94FF-20F652AC770C.jpeg" alt="VanTrip logo">
+          <div class="brand-text">
+            <strong id="brandName">VANTRIP</strong>
+            <span>road experiences</span>
+          </div>
+        </a>
 
-        <nav class="nav" aria-label="Navigazione">
-          <a href="#viaggi">Viaggi</a>
-          <a href="#come">Come funziona</a>
+        <nav class="nav">
+          <a href="#partenze">Partenze</a>
+          <a href="#come-funziona">Come funziona</a>
           <a href="#include">Cosa include</a>
           <a href="#faq">FAQ</a>
           <a href="#contatti">Contatti</a>
         </nav>
 
-        <div style="display:flex; gap:10px; align-items:center">
+        <div class="top-actions">
           <a class="btn ghost" id="waTopLink" href="#" target="_blank" rel="noopener">WhatsApp</a>
-          <a class="btn primary" href="#viaggi">Scopri</a>
+          <a class="btn primary" href="#partenze">Scopri</a>
         </div>
       </div>
     </div>
@@ -558,175 +669,218 @@
 
     <section class="hero">
       <div class="wrap">
-        <div class="heroGrid">
-          <div>
-            <div class="kicker">
-              <span class="dot"></span>
-              <span id="heroKicker"></span>
+        <div class="hero-shell">
+          <div class="hero-bg" id="heroBg"></div>
+
+          <div class="hero-inner">
+            <div class="hero-copy">
+              <div class="eyebrow">
+                <span class="eyebrow-dot"></span>
+                <span id="heroKicker"></span>
+              </div>
+
+              <h1 id="heroTitle"></h1>
+              <p id="heroSubtitle"></p>
+
+              <div class="hero-actions">
+                <a class="btn primary" href="#partenze" id="heroPrimaryBtn"></a>
+                <a class="btn" id="heroWaBtn" href="#" target="_blank" rel="noopener">Scrivi su WhatsApp</a>
+              </div>
+
+              <div class="hero-trust" id="heroTrust"></div>
             </div>
 
-            <h1 id="heroTitle"></h1>
-            <p class="lead" id="heroSubtitle"></p>
+            <aside class="glass hero-card">
+              <div class="hero-card-head">
+                <div>
+                  <h3 id="spotTitle"></h3>
+                  <p id="spotSubtitle"></p>
+                </div>
+                <div class="badge" id="spotSeats"></div>
+              </div>
 
-            <div class="heroActions">
-              <a class="btn primary" href="#viaggi" id="heroPrimaryBtn"></a>
-              <a class="btn" href="#contatti">Chiedi info su WhatsApp</a>
-            </div>
+              <div class="mini-grid">
+                <div class="mini-item"><em>Destinazione</em><span id="spotDest"></span></div>
+                <div class="mini-item"><em>Date</em><span id="spotDates"></span></div>
+                <div class="mini-item"><em>Durata</em><span id="spotDays"></span></div>
+                <div class="mini-item"><em>Gruppo</em><span id="spotGroup"></span></div>
+              </div>
 
-            <div class="trustRow" id="trustRow"></div>
+              <p class="mini-desc" id="spotDesc"></p>
+
+              <button class="btn primary block" type="button" onclick="openHighlightWhatsApp()">
+                Blocca il tuo posto su WhatsApp
+              </button>
+
+              <p class="fine">Modifica viaggi, foto, testi e FAQ dal pannello configurazione nel codice.</p>
+            </aside>
           </div>
+        </div>
+      </div>
+    </section>
 
-          <aside class="glass heroVisual" aria-label="Card informativa">
-            <div class="photo" id="heroPhoto" role="img" aria-label="VanTrip hero"></div>
-            <div class="body">
-              <h3 id="nextTripTitle"></h3>
-              <p id="nextTripSubtitle"></p>
+    <section class="section" id="partenza-evidenza">
+      <div class="wrap">
+        <div class="featured">
+          <div class="featured-photo" id="featuredPhoto"></div>
 
-              <div class="miniGrid">
-                <div class="chip">📍 <em>Destinazione:</em><br><span id="nextTripDest">—</span></div>
-                <div class="chip">🗓️ <em>Date:</em><br><span id="nextTripDates">—</span></div>
-                <div class="chip">👥 <em>Gruppo:</em><br><span id="nextTripGroup">—</span></div>
-                <div class="chip">🚐 <em>Durata:</em><br><span id="nextTripDays">—</span></div>
-              </div>
+          <div class="glass featured-card">
+            <div class="tag label" id="featuredBadge"></div>
+            <h3 id="featuredTitle"></h3>
+            <p id="featuredText"></p>
 
-              <div style="margin-top:14px">
-                <button class="btn primary block" type="button" onclick="quickWhatsAppFromNextTrip()">
-                  Chiedi disponibilità su WhatsApp
-                </button>
-              </div>
-
-              <p class="fineprint">Modifica testi, viaggi, FAQ e foto nel pannello configurazione dentro il codice.</p>
+            <div class="info-badges">
+              <span id="featuredDate"></span>
+              <span id="featuredDuration"></span>
+              <span id="featuredGroup"></span>
             </div>
-          </aside>
+
+            <div class="include-boxes" id="featuredIncludes"></div>
+
+            <div style="display:flex;gap:10px;flex-wrap:wrap">
+              <button class="btn primary" type="button" onclick="openHighlightWhatsApp()">Prenota / Info</button>
+              <a class="btn ghost" href="#partenze">Vedi tutte le partenze</a>
+            </div>
+          </div>
         </div>
       </div>
     </section>
 
-    <section>
+    <section class="section" id="partenze">
       <div class="wrap">
-        <div class="head">
-          <h2 id="aboutTitle"></h2>
-          <p id="aboutSubtitle"></p>
-        </div>
-        <div class="grid3" id="featuresGrid"></div>
-      </div>
-    </section>
-
-    <section id="viaggi">
-      <div class="wrap">
-        <div class="head">
+        <div class="section-head">
           <h2 id="tripsTitle"></h2>
           <p id="tripsSubtitle"></p>
         </div>
-        <div class="tripsGrid" id="tripsGrid"></div>
+        <div class="trip-grid" id="tripGrid"></div>
       </div>
     </section>
 
-    <section id="come">
+    <section class="section">
       <div class="wrap">
-        <div class="head">
+        <div class="section-head">
+          <h2 id="aboutTitle"></h2>
+          <p id="aboutSubtitle"></p>
+        </div>
+        <div class="feature-grid" id="featureGrid"></div>
+      </div>
+    </section>
+
+    <section class="section" id="come-funziona">
+      <div class="wrap">
+        <div class="section-head">
           <h2 id="stepsTitle"></h2>
           <p id="stepsSubtitle"></p>
         </div>
-        <div class="grid3" id="stepsGrid"></div>
+        <div class="step-grid" id="stepGrid"></div>
       </div>
     </section>
 
-    <section id="include">
+    <section class="section" id="include">
       <div class="wrap">
-        <div class="head">
+        <div class="section-head">
           <h2 id="includeTitle"></h2>
           <p id="includeSubtitle"></p>
         </div>
 
         <div class="split">
-          <div class="glass card">
-            <h3 style="margin-top:0" id="includeBoxTitle"></h3>
-            <ul id="includeList" style="margin:10px 0 0; padding-left:18px; color:rgba(244,248,255,.9); font-weight:750"></ul>
+          <div class="glass include-card">
+            <h3 id="includeBoxTitle"></h3>
+            <ul class="include-list" id="includeList"></ul>
           </div>
 
-          <div class="glass card ctaPanel">
-            <h3 style="margin-top:0" id="ctaBoxTitle"></h3>
-            <p style="margin:0 0 14px; color:rgba(244,248,255,.86); font-weight:750" id="ctaBoxText"></p>
-            <a class="btn primary block" id="waInfoLink" href="#" target="_blank" rel="noopener">Scrivi su WhatsApp</a>
-            <p class="fineprint" id="ctaBoxNote"></p>
+          <div class="glass cta-card">
+            <h3 id="ctaTitle"></h3>
+            <p id="ctaText"></p>
+            <div style="height:14px"></div>
+            <a class="btn primary block" id="waMidLink" href="#" target="_blank" rel="noopener">Scrivi su WhatsApp</a>
+            <p class="fine" id="ctaFine"></p>
           </div>
         </div>
       </div>
     </section>
 
-    <section id="faq">
+    <section class="section">
       <div class="wrap">
-        <div class="head">
+        <div class="section-head">
+          <h2 id="quotesTitle"></h2>
+          <p id="quotesSubtitle"></p>
+        </div>
+        <div class="quote-grid" id="quoteGrid"></div>
+      </div>
+    </section>
+
+    <section class="section" id="faq">
+      <div class="wrap">
+        <div class="section-head">
           <h2 id="faqTitle"></h2>
           <p id="faqSubtitle"></p>
         </div>
-        <div class="faqList" id="faqList"></div>
+        <div class="faq-list" id="faqList"></div>
       </div>
     </section>
 
-    <section id="contatti">
+    <section class="section" id="contatti">
       <div class="wrap">
-        <div class="head">
+        <div class="section-head">
           <h2 id="contactTitle"></h2>
           <p id="contactSubtitle"></p>
         </div>
 
         <div class="split">
-          <div class="glass card">
+          <div class="glass include-card">
             <h3 style="margin-top:0">Richiesta rapida</h3>
 
             <form onsubmit="return false;">
               <div class="form-row">
                 <div>
                   <label for="nome">Nome</label>
-                  <input id="nome" name="nome" placeholder="Il tuo nome" required>
+                  <input id="nome" type="text" placeholder="Il tuo nome" required>
                 </div>
                 <div>
                   <label for="telefono">Telefono</label>
-                  <input id="telefono" name="telefono" placeholder="+39 ..." required>
+                  <input id="telefono" type="text" placeholder="+39 ..." required>
                 </div>
               </div>
 
               <div class="form-row">
                 <div>
                   <label for="email">Email (opzionale)</label>
-                  <input id="email" name="email" type="email" placeholder="nome@email.it">
+                  <input id="email" type="email" placeholder="nome@email.it">
                 </div>
                 <div>
                   <label for="viaggio">Viaggio interessato</label>
-                  <select id="viaggio" name="viaggio" required></select>
+                  <select id="viaggio" required></select>
                 </div>
               </div>
 
               <div>
                 <label for="msg">Messaggio</label>
-                <textarea id="msg" name="msg" placeholder="Periodo, numero persone, cosa cerchi..." required></textarea>
+                <textarea id="msg" placeholder="Periodo, numero persone, cosa cerchi..." required></textarea>
               </div>
 
               <button class="btn primary block" type="button" onclick="sendWhatsAppFromForm()">
                 Prenota su WhatsApp
               </button>
 
-              <p class="fineprint">Il sito apre la chat con il messaggio già compilato.</p>
+              <p class="fine">Si aprirà WhatsApp con il messaggio già compilato.</p>
             </form>
           </div>
 
-          <div class="glass card">
-            <h3 style="margin-top:0">Contatto diretto</h3>
-            <p style="margin:0 0 14px; color:var(--muted); font-weight:650" id="directText"></p>
+          <div class="glass cta-card">
+            <h3 id="directTitle"></h3>
+            <p id="directText"></p>
 
+            <div style="height:14px"></div>
             <a class="btn primary block" id="waDirectLink" href="#" target="_blank" rel="noopener">💬 WhatsApp diretto</a>
 
-            <div style="margin-top:14px">
-              <div class="tag" id="instagramTag"></div>
-              <div style="height:10px"></div>
-              <div class="tag" id="replyTag"></div>
+            <div style="display:flex;gap:10px;flex-wrap:wrap;margin-top:14px">
+              <span class="tag" id="instagramTag"></span>
+              <span class="tag" id="replyTag"></span>
             </div>
 
-            <div style="margin-top:14px">
-              <a class="btn ghost block" href="#viaggi">Torna ai viaggi</a>
-            </div>
+            <div style="height:14px"></div>
+            <a class="btn ghost block" href="#partenze">Torna alle partenze</a>
           </div>
         </div>
       </div>
@@ -736,9 +890,9 @@
 
   <footer>
     <div class="wrap">
-      <div class="footerRow">
+      <div class="footer-row">
         <div id="footerText"></div>
-        <div style="display:flex; gap:12px; flex-wrap:wrap">
+        <div style="display:flex;gap:12px;flex-wrap:wrap">
           <a href="#faq">FAQ</a>
           <a href="#contatti">Contatti</a>
           <a href="#" onclick="alert('Aggiungi qui Privacy / Termini'); return false;">Privacy</a>
@@ -747,80 +901,74 @@
     </div>
   </footer>
 
-  <a class="btn primary waFloat" id="waFloatLink" href="#" target="_blank" rel="noopener">
-    💬 WhatsApp
-  </a>
+  <a class="btn primary wa-float" id="waFloatLink" href="#" target="_blank" rel="noopener">💬 WhatsApp</a>
 
   <script>
     /*
     ==========================================================
     PANNELLO CONFIGURAZIONE VANTRIP
-    MODIFICA SOLO QUESTA PARTE
+    MODIFICA SOLO QUI
     QUESTA PARTE NON SI VEDE ONLINE
     ==========================================================
     */
 
-    const SITE_CONTENT = {
-      brandName: "VanTrip",
-      whatsappNumber: "391234567890",
+    const SITE = {
+      brandName: "VANTRIP",
+      whatsappNumber: "390282396395",
       instagram: "@vantrip",
+
+      assets: {
+        logo: "IMG_4884.jpeg",
+        heroImage: "22C21893-B0ED-4673-B5C1-C1902D4E01F2.png"
+      },
 
       hero: {
         kicker: "Esperienze in camper • Piccoli gruppi • Natura",
         title: "Scappa dalla routine. Parti con VanTrip.",
-        subtitle: "Esperienze in camper con piccoli gruppi, tra natura, libertà e condivisione. Tu devi solo partire.",
-        primaryButton: "Scopri il prossimo viaggio →",
+        subtitle: "Viaggi organizzati in camper con piccoli gruppi, tra libertà, natura e nuove connessioni. Tu devi solo partire.",
+        primaryButton: "Scopri le partenze",
         trust: [
           "✅ Camper attrezzato",
           "🗺️ Itinerario organizzato",
           "🤝 Piccolo gruppo",
           "🛟 Supporto durante il viaggio"
-        ],
-        photo: "22C21893-B0ED-4673-B5C1-C1902D4E01F2.png",
-        nextTripTitle: "Prossima partenza",
-        nextTripSubtitle: "Piccoli gruppi, posti limitati, esperienza organizzata."
+        ]
       },
 
-      about: {
-        title: "Cos’è VanTrip",
-        subtitle: "Un’esperienza di viaggio alternativa: il mezzo è solo l’inizio, l’obiettivo è l’avventura.",
-        features: [
-          {
-            icon: "🚐",
-            title: "Camper pronti a partire",
-            text: "Camper attrezzati per vivere bene: dormi, cucini e ti godi il viaggio senza stress."
-          },
-          {
-            icon: "🤝",
-            title: "Piccoli gruppi, vibes giuste",
-            text: "Conosci persone nuove, condividi tappe ed esperienza. Niente tour di massa."
-          },
-          {
-            icon: "🗺️",
-            title: "Itinerario + supporto",
-            text: "Route, soste e spot consigliati. Ti aiutiamo prima e durante il viaggio."
-          }
+      spotlight: {
+        title: "Prossima partenza",
+        subtitle: "Piccoli gruppi, posti limitati, esperienza organizzata."
+      },
+
+      featured: {
+        badge: "Viaggio in evidenza",
+        text: "Un road trip pensato per farti vivere il viaggio senza complicarti la parte organizzativa. Camper, gruppo, atmosfera, spot giusti e supporto quando serve.",
+        includes: [
+          "Camper attrezzato",
+          "Itinerario consigliato",
+          "Supporto viaggio",
+          "Briefing iniziale"
         ]
       },
 
       tripsSection: {
         title: "Prossime partenze",
-        subtitle: "Scegli il viaggio, guarda date e dettagli, poi scrivici su WhatsApp."
+        subtitle: "Ogni viaggio è pensato per piccoli gruppi. Scegli la partenza che senti più tua e scrivici su WhatsApp."
       },
 
       trips: [
         {
           id: "trip1",
           emoji: "⛰️",
-          title: "Lampedusa VanTrip",
-          destination: "Lampedusa",
+          title: "Dolomiti VanTrip",
+          destination: "Dolomiti",
           dates: "12 - 15 luglio",
           days: "4 giorni",
-          group: "3 - 7 persone",
-          vibe: "mare + tramondo ",
-          desc: "Laghi alpini, passi panoramici e notti sotto le stelle.",
+          group: "8 - 12 persone",
+          vibe: "natura + panorami",
+          desc: "Laghi alpini, passi panoramici e notti sotto le stelle. Un viaggio perfetto per staccare davvero.",
           seats: "Ultimi posti",
-          photo: "22C21893-B0ED-4673-B5C1-C1902D4E01F2.png"
+          image: "22C21893-B0ED-4673-B5C1-C1902D4E01F2.png"
         },
         {
           id: "trip2",
@@ -831,50 +979,72 @@
           days: "Weekend",
           group: "6 - 10 persone",
           vibe: "mare + tramonto",
-          desc: "Vanlife sul mare, tramonti e falò in spiaggia.",
+          desc: "Vanlife sul mare, tramonti, soste panoramiche e serate semplici ma memorabili.",
           seats: "Posti limitati",
-          photo: "22C21893-B0ED-4673-B5C1-C1902D4E01F2.png"
+          image: "22C21893-B0ED-4673-B5C1-C1902D4E01F2.png"
         },
         {
           id: "trip3",
           emoji: "🏞️",
           title: "Lakes Adventure",
-          destination: "Laghi",
+          destination: "Laghi e boschi",
           dates: "9 - 11 agosto",
           days: "3 giorni",
           group: "8 persone",
           vibe: "boschi + libertà",
-          desc: "Boschi, lago e libertà totale in camper.",
+          desc: "Un weekend tra lago, boschi e strade secondarie. Perfetto per rallentare e respirare.",
           seats: "Disponibile",
-          photo: "22C21893-B0ED-4673-B5C1-C1902D4E01F2.png"
+          image: "22C21893-B0ED-4673-B5C1-C1902D4E01F2.png"
         }
       ],
 
+      about: {
+        title: "Perché VanTrip",
+        subtitle: "Non è il classico noleggio. È un modo diverso di partire: più semplice, più umano, più autentico.",
+        items: [
+          {
+            icon: "🚐",
+            title: "Camper pronti a partire",
+            text: "Trovi una base pronta e pensata per il viaggio, senza dover organizzare tutto da zero."
+          },
+          {
+            icon: "🤝",
+            title: "Piccoli gruppi, giuste vibes",
+            text: "Esperienze condivise con poche persone, per vivere il viaggio bene e senza l’effetto tour di massa."
+          },
+          {
+            icon: "🗺️",
+            title: "Supporto e organizzazione",
+            text: "Itinerario, consigli, briefing e supporto: la libertà della strada con meno pensieri."
+          }
+        ]
+      },
+
       steps: {
         title: "Come funziona",
-        subtitle: "Pochi passaggi, tutto semplice.",
+        subtitle: "Tre step semplici per partire senza complicarti la vita.",
         items: [
           {
             icon: "1️⃣",
-            title: "Scegli il viaggio",
-            text: "Guarda destinazione, date e stile dell’esperienza."
+            title: "Scegli la partenza",
+            text: "Guarda le destinazioni, le date e il tipo di esperienza."
           },
           {
             icon: "2️⃣",
             title: "Scrivici su WhatsApp",
-            text: "Ti confermiamo disponibilità, dettagli e costi."
+            text: "Ti confermiamo disponibilità, dettagli e costi in modo veloce."
           },
           {
             icon: "3️⃣",
-            title: "Parti col gruppo",
-            text: "Ritiro, briefing iniziale e poi via verso l’avventura."
+            title: "Parti con VanTrip",
+            text: "Ritiro, briefing e poi si va: strada, natura e gruppo."
           }
         ]
       },
 
       include: {
         title: "Cosa include",
-        subtitle: "Una formula semplice per vivere il viaggio senza complicazioni.",
+        subtitle: "Una formula chiara per vivere il viaggio con leggerezza.",
         boxTitle: "Incluso nell’esperienza",
         items: [
           "Camper attrezzato",
@@ -884,8 +1054,30 @@
           "Briefing iniziale e consigli pratici"
         ],
         ctaTitle: "Vuoi info subito?",
-        ctaText: "Scrivici su WhatsApp e ti diciamo disponibilità, date e costi.",
-        ctaNote: "Piccoli gruppi e posti limitati."
+        ctaText: "Scrivici su WhatsApp e ti diciamo disponibilità, date e costi della partenza che ti interessa.",
+        ctaFine: "Piccoli gruppi e posti limitati."
+      },
+
+      quotes: {
+        title: "L’atmosfera VanTrip",
+        subtitle: "Quello che conta non è solo la destinazione, ma come vivi ogni tappa.",
+        items: [
+          {
+            title: "Road vibes",
+            text: "“Viaggio semplice, zero stress, posti incredibili. Sembrava di partire con amici.”",
+            by: "— Esperienza VanTrip"
+          },
+          {
+            title: "Connessioni vere",
+            text: "“La parte più bella? Condividere il viaggio con persone nuove ma sulla stessa lunghezza d’onda.”",
+            by: "— Esperienza VanTrip"
+          },
+          {
+            title: "Libertà organizzata",
+            text: "“La libertà del camper, ma con l’organizzazione giusta per godersela davvero.”",
+            by: "— Esperienza VanTrip"
+          }
+        ]
       },
 
       faq: {
@@ -894,11 +1086,11 @@
         items: [
           {
             q: "Serve esperienza per guidare un camper?",
-            a: "No. Ti facciamo un briefing iniziale e ti spieghiamo tutto in modo semplice."
+            a: "No. Ti facciamo un briefing iniziale e ti spieghiamo tutto in modo semplice prima della partenza."
           },
           {
             q: "Posso partecipare anche da solo/a?",
-            a: "Sì. Molte persone partono da sole per vivere l’esperienza e conoscere nuove persone."
+            a: "Sì. Molte persone partono da sole per vivere un’esperienza diversa e conoscere nuove persone."
           },
           {
             q: "È un viaggio organizzato o libero?",
@@ -906,35 +1098,30 @@
           },
           {
             q: "Come prenoto?",
-            a: "Scegli il viaggio e scrivici su WhatsApp. Ti diciamo subito disponibilità e prossimi step."
+            a: "Scegli la partenza che ti interessa e scrivici su WhatsApp. Ti rispondiamo con disponibilità, costi e prossimi step."
           }
         ]
       },
 
       contact: {
         title: "Prenota su WhatsApp",
-        subtitle: "Compila il form: si apre WhatsApp con il messaggio già pronto.",
-        directText: "Preferisci scrivere senza compilare? Clicca qui:",
+        subtitle: "Compila il form oppure scrivici direttamente: ti rispondiamo con disponibilità e dettagli.",
+        directTitle: "Contatto diretto",
+        directText: "Preferisci scrivere senza compilare il form? Apri subito la chat.",
         replyTag: "⏱️ Risposta veloce"
       },
 
-      footer: "© 2026 VanTrip • Viaggi in camper con gruppo"
+      footer: "© 2026 VanTrip • Esperienze in camper con piccoli gruppi"
     };
 
     /*
     ==========================================================
     FINE PANNELLO CONFIGURAZIONE
-    SOTTO NON TOCCARE SE NON NECESSARIO
     ==========================================================
     */
 
     function waUrl(text){
-      return `https://wa.me/${SITE_CONTENT.whatsappNumber}?text=${encodeURIComponent(text)}`;
-    }
-
-    function genericWaText(){
-      return `Ciao ${SITE_CONTENT.brandName}! 🚐
-Vorrei info sui prossimi viaggi.`;
+      return `https://wa.me/${SITE.whatsappNumber}?text=${encodeURIComponent(text)}`;
     }
 
     function setText(id, value){
@@ -942,36 +1129,87 @@ Vorrei info sui prossimi viaggi.`;
       if(el) el.textContent = value;
     }
 
-    function renderTrust(){
-      const row = document.getElementById("trustRow");
-      row.innerHTML = SITE_CONTENT.hero.trust
+    function setHref(id, value){
+      const el = document.getElementById(id);
+      if(el) el.href = value;
+    }
+
+    function genericText(){
+      return `Ciao ${SITE.brandName}! 🚐
+Vorrei info sui prossimi viaggi.`;
+    }
+
+    function renderHeader(){
+      setText("brandName", SITE.brandName);
+      document.getElementById("headerLogo").src = SITE.assets.logo;
+      const generic = waUrl(genericText());
+      ["waTopLink","heroWaBtn","waMidLink","waDirectLink","waFloatLink"].forEach(id => setHref(id, generic));
+    }
+
+    function renderHero(){
+      setText("heroKicker", SITE.hero.kicker);
+      setText("heroTitle", SITE.hero.title);
+      setText("heroSubtitle", SITE.hero.subtitle);
+      setText("heroPrimaryBtn", SITE.hero.primaryButton);
+
+      const heroBg = document.getElementById("heroBg");
+      heroBg.style.background = `
+        linear-gradient(180deg, rgba(11,15,20,.18), rgba(11,15,20,.58)),
+        linear-gradient(90deg, rgba(11,15,20,.84) 0%, rgba(11,15,20,.44) 45%, rgba(11,15,20,.18) 100%),
+        url("${SITE.assets.heroImage}")
+      `;
+      heroBg.style.backgroundSize = "cover";
+      heroBg.style.backgroundPosition = "center";
+
+      document.getElementById("heroTrust").innerHTML = SITE.hero.trust
         .map(item => `<span class="tag">${item}</span>`)
         .join("");
     }
 
-    function renderFeatures(){
-      const grid = document.getElementById("featuresGrid");
-      grid.innerHTML = SITE_CONTENT.about.features.map(item => `
-        <div class="glass card">
-          <div class="icon">${item.icon}</div>
-          <h3>${item.title}</h3>
-          <p>${item.text}</p>
-        </div>
-      `).join("");
+    function renderSpotlight(){
+      const t = SITE.trips[0];
+      if(!t) return;
+      setText("spotTitle", SITE.spotlight.title);
+      setText("spotSubtitle", SITE.spotlight.subtitle);
+      setText("spotSeats", t.seats);
+      setText("spotDest", t.destination);
+      setText("spotDates", t.dates);
+      setText("spotDays", t.days);
+      setText("spotGroup", t.group);
+      setText("spotDesc", t.desc);
+    }
+
+    function renderFeatured(){
+      const t = SITE.trips[0];
+      if(!t) return;
+
+      document.getElementById("featuredPhoto").style.backgroundImage = `url("${t.image}")`;
+      setText("featuredBadge", SITE.featured.badge);
+      setText("featuredTitle", t.title);
+      setText("featuredText", SITE.featured.text);
+      setText("featuredDate", `🗓️ ${t.dates}`);
+      setText("featuredDuration", `🚐 ${t.days}`);
+      setText("featuredGroup", `👥 ${t.group}`);
+
+      document.getElementById("featuredIncludes").innerHTML = SITE.featured.includes
+        .map(item => `<div class="include-pill">${item}</div>`)
+        .join("");
     }
 
     function renderTrips(){
-      const grid = document.getElementById("tripsGrid");
-      grid.innerHTML = SITE_CONTENT.trips.map(t => `
-        <article class="glass trip">
-          <div class="photo" style="background-image:url('${t.photo}')"></div>
-          <div class="content">
-            <div class="titleRow">
-              <p class="tripTitle">${t.emoji} ${t.title}</p>
-              <span class="pillSmall">${t.seats}</span>
+      setText("tripsTitle", SITE.tripsSection.title);
+      setText("tripsSubtitle", SITE.tripsSection.subtitle);
+
+      document.getElementById("tripGrid").innerHTML = SITE.trips.map(t => `
+        <article class="glass trip-card">
+          <div class="trip-image" style="background-image:url('${t.image}')"></div>
+          <div class="trip-body">
+            <div class="trip-head">
+              <h3>${t.emoji} ${t.title}</h3>
+              <span class="trip-pill">${t.seats}</span>
             </div>
 
-            <div class="meta">
+            <div class="trip-meta">
               <span>📍 ${t.destination}</span>
               <span>🗓️ ${t.dates}</span>
               <span>🚐 ${t.days}</span>
@@ -979,7 +1217,7 @@ Vorrei info sui prossimi viaggi.`;
               <span>🔥 ${t.vibe}</span>
             </div>
 
-            <p style="margin:0 0 12px; color:var(--muted); font-weight:650">${t.desc}</p>
+            <p>${t.desc}</p>
 
             <button class="btn primary block" type="button" onclick="openTripWhatsApp('${t.id}')">
               Prenota / Info su WhatsApp
@@ -989,11 +1227,26 @@ Vorrei info sui prossimi viaggi.`;
       `).join("");
     }
 
+    function renderAbout(){
+      setText("aboutTitle", SITE.about.title);
+      setText("aboutSubtitle", SITE.about.subtitle);
+
+      document.getElementById("featureGrid").innerHTML = SITE.about.items.map(item => `
+        <div class="glass feature-card">
+          <div class="iconbox">${item.icon}</div>
+          <h3>${item.title}</h3>
+          <p>${item.text}</p>
+        </div>
+      `).join("");
+    }
+
     function renderSteps(){
-      const grid = document.getElementById("stepsGrid");
-      grid.innerHTML = SITE_CONTENT.steps.items.map(item => `
-        <div class="glass card">
-          <div class="icon">${item.icon}</div>
+      setText("stepsTitle", SITE.steps.title);
+      setText("stepsSubtitle", SITE.steps.subtitle);
+
+      document.getElementById("stepGrid").innerHTML = SITE.steps.items.map(item => `
+        <div class="glass step-card">
+          <div class="iconbox">${item.icon}</div>
           <h3>${item.title}</h3>
           <p>${item.text}</p>
         </div>
@@ -1001,51 +1254,80 @@ Vorrei info sui prossimi viaggi.`;
     }
 
     function renderInclude(){
-      const list = document.getElementById("includeList");
-      list.innerHTML = SITE_CONTENT.include.items
+      setText("includeTitle", SITE.include.title);
+      setText("includeSubtitle", SITE.include.subtitle);
+      setText("includeBoxTitle", SITE.include.boxTitle);
+      setText("ctaTitle", SITE.include.ctaTitle);
+      setText("ctaText", SITE.include.ctaText);
+      setText("ctaFine", SITE.include.ctaFine);
+
+      document.getElementById("includeList").innerHTML = SITE.include.items
         .map(item => `<li>${item}</li>`)
         .join("");
     }
 
+    function renderQuotes(){
+      setText("quotesTitle", SITE.quotes.title);
+      setText("quotesSubtitle", SITE.quotes.subtitle);
+
+      document.getElementById("quoteGrid").innerHTML = SITE.quotes.items.map(item => `
+        <div class="glass quote-card">
+          <h3>${item.title}</h3>
+          <p class="quote">${item.text}</p>
+          <p class="quote-by">${item.by}</p>
+        </div>
+      `).join("");
+    }
+
     function renderFaq(){
+      setText("faqTitle", SITE.faq.title);
+      setText("faqSubtitle", SITE.faq.subtitle);
+
       const list = document.getElementById("faqList");
-      list.innerHTML = SITE_CONTENT.faq.items.map((item, index) => `
-        <div class="faqItem ${index === 0 ? 'active' : ''}">
-          <button class="faqQuestion" type="button">
+      list.innerHTML = SITE.faq.items.map((item, index) => `
+        <div class="faq-item ${index === 0 ? 'active' : ''}">
+          <button class="faq-q" type="button">
             <span>${item.q}</span>
             <span>+</span>
           </button>
-          <div class="faqAnswer">
-            <div class="faqAnswerInner">${item.a}</div>
+          <div class="faq-a">
+            <div class="faq-a-inner">${item.a}</div>
           </div>
         </div>
       `).join("");
 
-      const faqItems = document.querySelectorAll(".faqItem");
-      faqItems.forEach(item => {
-        const btn = item.querySelector(".faqQuestion");
+      const items = document.querySelectorAll(".faq-item");
+      items.forEach(item => {
+        const btn = item.querySelector(".faq-q");
         btn.addEventListener("click", () => {
-          const isActive = item.classList.contains("active");
-          faqItems.forEach(el => el.classList.remove("active"));
-          if(!isActive) item.classList.add("active");
+          const active = item.classList.contains("active");
+          items.forEach(el => el.classList.remove("active"));
+          if(!active) item.classList.add("active");
         });
       });
     }
 
-    function fillTripSelect(){
-      const sel = document.getElementById("viaggio");
-      sel.innerHTML = `
+    function renderContact(){
+      setText("contactTitle", SITE.contact.title);
+      setText("contactSubtitle", SITE.contact.subtitle);
+      setText("directTitle", SITE.contact.directTitle);
+      setText("directText", SITE.contact.directText);
+      setText("instagramTag", `📸 Instagram: ${SITE.instagram}`);
+      setText("replyTag", SITE.contact.replyTag);
+      setText("footerText", SITE.footer);
+
+      document.getElementById("viaggio").innerHTML = `
         <option value="" selected disabled>Scegli un viaggio</option>
-        ${SITE_CONTENT.trips.map(t => `<option value="${t.title}">${t.title}</option>`).join("")}
+        ${SITE.trips.map(t => `<option value="${t.title}">${t.title}</option>`).join("")}
         <option value="Altro / su richiesta">Altro / su richiesta</option>
       `;
     }
 
     function openTripWhatsApp(tripId){
-      const t = SITE_CONTENT.trips.find(x => x.id === tripId);
+      const t = SITE.trips.find(x => x.id === tripId);
       if(!t) return;
 
-      const text = `Ciao ${SITE_CONTENT.brandName}! 🚐
+      const text = `Ciao ${SITE.brandName}! 🚐
 Vorrei info/prenotare:
 
 Viaggio: ${t.title}
@@ -1059,10 +1341,8 @@ Mi potete dire disponibilità e prezzi?`;
       window.open(waUrl(text), "_blank");
     }
 
-    function quickWhatsAppFromNextTrip(){
-      if(SITE_CONTENT.trips.length > 0){
-        openTripWhatsApp(SITE_CONTENT.trips[0].id);
-      }
+    function openHighlightWhatsApp(){
+      if(SITE.trips.length) openTripWhatsApp(SITE.trips[0].id);
     }
 
     function sendWhatsAppFromForm(){
@@ -1077,7 +1357,7 @@ Mi potete dire disponibilità e prezzi?`;
         return;
       }
 
-      const text = `Ciao ${SITE_CONTENT.brandName}! 🚐
+      const text = `Ciao ${SITE.brandName}! 🚐
 Vorrei info/prenotare.
 
 Nome: ${nome}
@@ -1091,81 +1371,18 @@ ${msg}`;
       window.open(waUrl(text), "_blank");
     }
 
-    function renderGenericWaLinks(){
-      const url = waUrl(genericWaText());
-      ["waTopLink", "waInfoLink", "waDirectLink", "waFloatLink"].forEach(id => {
-        const el = document.getElementById(id);
-        if(el) el.href = url;
-      });
-    }
-
-    function renderHeroCard(){
-      const firstTrip = SITE_CONTENT.trips[0];
-      if(!firstTrip) return;
-
-      setText("nextTripDest", firstTrip.destination);
-      setText("nextTripDates", firstTrip.dates);
-      setText("nextTripGroup", firstTrip.group);
-      setText("nextTripDays", firstTrip.days);
-    }
-
-    function applyContent(){
-      setText("brandName", SITE_CONTENT.brandName);
-
-      setText("heroKicker", SITE_CONTENT.hero.kicker);
-      setText("heroTitle", SITE_CONTENT.hero.title);
-      setText("heroSubtitle", SITE_CONTENT.hero.subtitle);
-      setText("heroPrimaryBtn", SITE_CONTENT.hero.primaryButton);
-      setText("nextTripTitle", SITE_CONTENT.hero.nextTripTitle);
-      setText("nextTripSubtitle", SITE_CONTENT.hero.nextTripSubtitle);
-
-      const heroPhoto = document.getElementById("heroPhoto");
-      heroPhoto.style.backgroundImage = `
-        linear-gradient(180deg, rgba(7,10,16,.04), rgba(7,10,16,.60)),
-        url('${SITE_CONTENT.hero.photo}')
-      `;
-      heroPhoto.style.backgroundSize = "cover";
-      heroPhoto.style.backgroundPosition = "center";
-
-      setText("aboutTitle", SITE_CONTENT.about.title);
-      setText("aboutSubtitle", SITE_CONTENT.about.subtitle);
-
-      setText("tripsTitle", SITE_CONTENT.tripsSection.title);
-      setText("tripsSubtitle", SITE_CONTENT.tripsSection.subtitle);
-
-      setText("stepsTitle", SITE_CONTENT.steps.title);
-      setText("stepsSubtitle", SITE_CONTENT.steps.subtitle);
-
-      setText("includeTitle", SITE_CONTENT.include.title);
-      setText("includeSubtitle", SITE_CONTENT.include.subtitle);
-      setText("includeBoxTitle", SITE_CONTENT.include.boxTitle);
-      setText("ctaBoxTitle", SITE_CONTENT.include.ctaTitle);
-      setText("ctaBoxText", SITE_CONTENT.include.ctaText);
-      setText("ctaBoxNote", SITE_CONTENT.include.ctaNote);
-
-      setText("faqTitle", SITE_CONTENT.faq.title);
-      setText("faqSubtitle", SITE_CONTENT.faq.subtitle);
-
-      setText("contactTitle", SITE_CONTENT.contact.title);
-      setText("contactSubtitle", SITE_CONTENT.contact.subtitle);
-      setText("directText", SITE_CONTENT.contact.directText);
-      setText("instagramTag", `📸 Instagram: ${SITE_CONTENT.instagram}`);
-      setText("replyTag", SITE_CONTENT.contact.replyTag);
-
-      setText("footerText", SITE_CONTENT.footer);
-    }
-
     function init(){
-      applyContent();
-      renderTrust();
-      renderFeatures();
+      renderHeader();
+      renderHero();
+      renderSpotlight();
+      renderFeatured();
       renderTrips();
+      renderAbout();
       renderSteps();
       renderInclude();
+      renderQuotes();
       renderFaq();
-      fillTripSelect();
-      renderGenericWaLinks();
-      renderHeroCard();
+      renderContact();
     }
 
     init();
